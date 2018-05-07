@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.market.dao.DeliveryOrderMapper" >
+  <resultMap id="BaseResultMap" type="cn.market.pojo.DeliveryOrder" >
+    <id column="deliveryId" property="deliveryid" jdbcType="VARCHAR" />
+    <result column="deliveryStatus" property="deliverystatus" jdbcType="VARCHAR" />
+    <result column="sorterName" property="sortername" jdbcType="VARCHAR" />
+    <result column="sorterId" property="sorterid" jdbcType="INTEGER" />
+    <result column="sortingDateTime" property="sortingdatetime" jdbcType="TIMESTAMP" />
+    <result column="courierName" property="couriername" jdbcType="VARCHAR" />
+    <result column="courierId" property="courierid" jdbcType="INTEGER" />
+    <result column="deliveryDateTime" property="deliverydatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.market.pojo.DeliveryOrder" extends="BaseResultMap" >
+    <result column="deliveryContent" property="deliverycontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    deliveryId, deliveryStatus, sorterName, sorterId, sortingDateTime, courierName, courierId, 
+    deliveryDateTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    deliveryContent
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.market.pojo.DeliveryOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from delivery_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.market.pojo.DeliveryOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from delivery_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from delivery_order
+    where deliveryId = #{deliveryid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from delivery_order
+    where deliveryId = #{deliveryid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.market.pojo.DeliveryOrderExample" >
+    delete from delivery_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.market.pojo.DeliveryOrder" >
+    insert into delivery_order (deliveryId, deliveryStatus, sorterName, 
+      sorterId, sortingDateTime, courierName, 
+      courierId, deliveryDateTime, deliveryContent
+      )
+    values (#{deliveryid,jdbcType=VARCHAR}, #{deliverystatus,jdbcType=VARCHAR}, #{sortername,jdbcType=VARCHAR}, 
+      #{sorterid,jdbcType=INTEGER}, #{sortingdatetime,jdbcType=TIMESTAMP}, #{couriername,jdbcType=VARCHAR}, 
+      #{courierid,jdbcType=INTEGER}, #{deliverydatetime,jdbcType=TIMESTAMP}, #{deliverycontent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.market.pojo.DeliveryOrder" >
+    insert into delivery_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliveryid != null" >
+        deliveryId,
+      </if>
+      <if test="deliverystatus != null" >
+        deliveryStatus,
+      </if>
+      <if test="sortername != null" >
+        sorterName,
+      </if>
+      <if test="sorterid != null" >
+        sorterId,
+      </if>
+      <if test="sortingdatetime != null" >
+        sortingDateTime,
+      </if>
+      <if test="couriername != null" >
+        courierName,
+      </if>
+      <if test="courierid != null" >
+        courierId,
+      </if>
+      <if test="deliverydatetime != null" >
+        deliveryDateTime,
+      </if>
+      <if test="deliverycontent != null" >
+        deliveryContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliveryid != null" >
+        #{deliveryid,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverystatus != null" >
+        #{deliverystatus,jdbcType=VARCHAR},
+      </if>
+      <if test="sortername != null" >
+        #{sortername,jdbcType=VARCHAR},
+      </if>
+      <if test="sorterid != null" >
+        #{sorterid,jdbcType=INTEGER},
+      </if>
+      <if test="sortingdatetime != null" >
+        #{sortingdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couriername != null" >
+        #{couriername,jdbcType=VARCHAR},
+      </if>
+      <if test="courierid != null" >
+        #{courierid,jdbcType=INTEGER},
+      </if>
+      <if test="deliverydatetime != null" >
+        #{deliverydatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliverycontent != null" >
+        #{deliverycontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.market.pojo.DeliveryOrderExample" resultType="java.lang.Integer" >
+    select count(*) from delivery_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update delivery_order
+    <set >
+      <if test="record.deliveryid != null" >
+        deliveryId = #{record.deliveryid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverystatus != null" >
+        deliveryStatus = #{record.deliverystatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sortername != null" >
+        sorterName = #{record.sortername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sorterid != null" >
+        sorterId = #{record.sorterid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sortingdatetime != null" >
+        sortingDateTime = #{record.sortingdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.couriername != null" >
+        courierName = #{record.couriername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courierid != null" >
+        courierId = #{record.courierid,jdbcType=INTEGER},
+      </if>
+      <if test="record.deliverydatetime != null" >
+        deliveryDateTime = #{record.deliverydatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deliverycontent != null" >
+        deliveryContent = #{record.deliverycontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update delivery_order
+    set deliveryId = #{record.deliveryid,jdbcType=VARCHAR},
+      deliveryStatus = #{record.deliverystatus,jdbcType=VARCHAR},
+      sorterName = #{record.sortername,jdbcType=VARCHAR},
+      sorterId = #{record.sorterid,jdbcType=INTEGER},
+      sortingDateTime = #{record.sortingdatetime,jdbcType=TIMESTAMP},
+      courierName = #{record.couriername,jdbcType=VARCHAR},
+      courierId = #{record.courierid,jdbcType=INTEGER},
+      deliveryDateTime = #{record.deliverydatetime,jdbcType=TIMESTAMP},
+      deliveryContent = #{record.deliverycontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update delivery_order
+    set deliveryId = #{record.deliveryid,jdbcType=VARCHAR},
+      deliveryStatus = #{record.deliverystatus,jdbcType=VARCHAR},
+      sorterName = #{record.sortername,jdbcType=VARCHAR},
+      sorterId = #{record.sorterid,jdbcType=INTEGER},
+      sortingDateTime = #{record.sortingdatetime,jdbcType=TIMESTAMP},
+      courierName = #{record.couriername,jdbcType=VARCHAR},
+      courierId = #{record.courierid,jdbcType=INTEGER},
+      deliveryDateTime = #{record.deliverydatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.market.pojo.DeliveryOrder" >
+    update delivery_order
+    <set >
+      <if test="deliverystatus != null" >
+        deliveryStatus = #{deliverystatus,jdbcType=VARCHAR},
+      </if>
+      <if test="sortername != null" >
+        sorterName = #{sortername,jdbcType=VARCHAR},
+      </if>
+      <if test="sorterid != null" >
+        sorterId = #{sorterid,jdbcType=INTEGER},
+      </if>
+      <if test="sortingdatetime != null" >
+        sortingDateTime = #{sortingdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couriername != null" >
+        courierName = #{couriername,jdbcType=VARCHAR},
+      </if>
+      <if test="courierid != null" >
+        courierId = #{courierid,jdbcType=INTEGER},
+      </if>
+      <if test="deliverydatetime != null" >
+        deliveryDateTime = #{deliverydatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliverycontent != null" >
+        deliveryContent = #{deliverycontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where deliveryId = #{deliveryid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.market.pojo.DeliveryOrder" >
+    update delivery_order
+    set deliveryStatus = #{deliverystatus,jdbcType=VARCHAR},
+      sorterName = #{sortername,jdbcType=VARCHAR},
+      sorterId = #{sorterid,jdbcType=INTEGER},
+      sortingDateTime = #{sortingdatetime,jdbcType=TIMESTAMP},
+      courierName = #{couriername,jdbcType=VARCHAR},
+      courierId = #{courierid,jdbcType=INTEGER},
+      deliveryDateTime = #{deliverydatetime,jdbcType=TIMESTAMP},
+      deliveryContent = #{deliverycontent,jdbcType=LONGVARCHAR}
+    where deliveryId = #{deliveryid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.market.pojo.DeliveryOrder" >
+    update delivery_order
+    set deliveryStatus = #{deliverystatus,jdbcType=VARCHAR},
+      sorterName = #{sortername,jdbcType=VARCHAR},
+      sorterId = #{sorterid,jdbcType=INTEGER},
+      sortingDateTime = #{sortingdatetime,jdbcType=TIMESTAMP},
+      courierName = #{couriername,jdbcType=VARCHAR},
+      courierId = #{courierid,jdbcType=INTEGER},
+      deliveryDateTime = #{deliverydatetime,jdbcType=TIMESTAMP}
+    where deliveryId = #{deliveryid,jdbcType=VARCHAR}
+  </update>
+</mapper>

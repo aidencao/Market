@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.market.dao.DeliveryOrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="cn.market.pojo.DeliveryOrderDetail" >
+    <result column="deliveryId" property="deliveryid" jdbcType="VARCHAR" />
+    <result column="macId" property="macid" jdbcType="VARCHAR" />
+    <result column="boxNo" property="boxno" jdbcType="INTEGER" />
+    <result column="goodsTypeId" property="goodstypeid" jdbcType="INTEGER" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    deliveryId, macId, boxNo, goodsTypeId, num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.market.pojo.DeliveryOrderDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from delivery_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="cn.market.pojo.DeliveryOrderDetailExample" >
+    delete from delivery_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.market.pojo.DeliveryOrderDetail" >
+    insert into delivery_order_detail (deliveryId, macId, boxNo, 
+      goodsTypeId, num)
+    values (#{deliveryid,jdbcType=VARCHAR}, #{macid,jdbcType=VARCHAR}, #{boxno,jdbcType=INTEGER}, 
+      #{goodstypeid,jdbcType=INTEGER}, #{num,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.market.pojo.DeliveryOrderDetail" >
+    insert into delivery_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliveryid != null" >
+        deliveryId,
+      </if>
+      <if test="macid != null" >
+        macId,
+      </if>
+      <if test="boxno != null" >
+        boxNo,
+      </if>
+      <if test="goodstypeid != null" >
+        goodsTypeId,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliveryid != null" >
+        #{deliveryid,jdbcType=VARCHAR},
+      </if>
+      <if test="macid != null" >
+        #{macid,jdbcType=VARCHAR},
+      </if>
+      <if test="boxno != null" >
+        #{boxno,jdbcType=INTEGER},
+      </if>
+      <if test="goodstypeid != null" >
+        #{goodstypeid,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.market.pojo.DeliveryOrderDetailExample" resultType="java.lang.Integer" >
+    select count(*) from delivery_order_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update delivery_order_detail
+    <set >
+      <if test="record.deliveryid != null" >
+        deliveryId = #{record.deliveryid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.macid != null" >
+        macId = #{record.macid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.boxno != null" >
+        boxNo = #{record.boxno,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodstypeid != null" >
+        goodsTypeId = #{record.goodstypeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.num != null" >
+        num = #{record.num,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update delivery_order_detail
+    set deliveryId = #{record.deliveryid,jdbcType=VARCHAR},
+      macId = #{record.macid,jdbcType=VARCHAR},
+      boxNo = #{record.boxno,jdbcType=INTEGER},
+      goodsTypeId = #{record.goodstypeid,jdbcType=INTEGER},
+      num = #{record.num,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

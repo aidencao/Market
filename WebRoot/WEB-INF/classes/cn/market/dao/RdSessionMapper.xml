@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.market.dao.RdSessionMapper" >
+  <resultMap id="BaseResultMap" type="cn.market.pojo.RdSession" >
+    <id column="rdSession" property="rdsession" jdbcType="VARCHAR" />
+    <result column="openId" property="openid" jdbcType="VARCHAR" />
+    <result column="sessionKey" property="sessionkey" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rdSession, openId, sessionKey
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.market.pojo.RdSessionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rd_session
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from rd_session
+    where rdSession = #{rdsession,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from rd_session
+    where rdSession = #{rdsession,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.market.pojo.RdSessionExample" >
+    delete from rd_session
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.market.pojo.RdSession" >
+    insert into rd_session (rdSession, openId, sessionKey
+      )
+    values (#{rdsession,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{sessionkey,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.market.pojo.RdSession" >
+    insert into rd_session
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rdsession != null" >
+        rdSession,
+      </if>
+      <if test="openid != null" >
+        openId,
+      </if>
+      <if test="sessionkey != null" >
+        sessionKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rdsession != null" >
+        #{rdsession,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionkey != null" >
+        #{sessionkey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.market.pojo.RdSessionExample" resultType="java.lang.Integer" >
+    select count(*) from rd_session
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update rd_session
+    <set >
+      <if test="record.rdsession != null" >
+        rdSession = #{record.rdsession,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openid != null" >
+        openId = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionkey != null" >
+        sessionKey = #{record.sessionkey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update rd_session
+    set rdSession = #{record.rdsession,jdbcType=VARCHAR},
+      openId = #{record.openid,jdbcType=VARCHAR},
+      sessionKey = #{record.sessionkey,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.market.pojo.RdSession" >
+    update rd_session
+    <set >
+      <if test="openid != null" >
+        openId = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionkey != null" >
+        sessionKey = #{sessionkey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rdSession = #{rdsession,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.market.pojo.RdSession" >
+    update rd_session
+    set openId = #{openid,jdbcType=VARCHAR},
+      sessionKey = #{sessionkey,jdbcType=VARCHAR}
+    where rdSession = #{rdsession,jdbcType=VARCHAR}
+  </update>
+</mapper>
